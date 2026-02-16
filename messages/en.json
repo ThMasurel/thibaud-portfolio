@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "about": "About",
+    "skills": "Skills",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "name": "Thibaud Masurel",
+    "role": "Full-Stack Developer",
+    "description": "I design and build modern, performant, and elegant web applications.",
+    "cta": "View my projects",
+    "cv": "Download CV"
+  },
+  "about": {
+    "title": "About",
+    "description": "A passionate software development student, I specialize in building complete web applications — from Go back-ends to modern React interfaces. Every project is an opportunity to sharpen my skills and tackle new technical challenges.",
+    "description2": "My journey has led me to work on diverse problems: graph algorithms, REST APIs, real-time systems with WebSockets, and front-end development with frameworks like Next.js. I place great emphasis on code quality, performance, and user experience.",
+    "description3": "Curious and self-taught, I'm also interested in the DevOps ecosystem (Docker, CI/CD), software architecture, and development best practices. My goal: building elegant solutions that solve real problems.",
+    "stats": {
+      "projects": "Projects completed",
+      "technologies": "Technologies",
+      "experience": "Years of coding"
+    }
+  },
+  "skills": {
+    "title": "Skills",
+    "categories": {
+      "languages": "Languages",
+      "frontend": "Front-end",
+      "backend": "Back-end",
+      "tools": "Tools & DevOps"
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "filters": {
+      "all": "All",
+      "go": "Go",
+      "js": "JavaScript",
+      "fullstack": "Full-Stack"
+    },
+    "viewCode": "Source Code",
+    "viewLive": "Live Demo",
+    "items": {
+      "groupie-tracker": {
+        "title": "Groupie Tracker",
+        "description": "Interactive Music Data Visualizer. Transformation of complex raw data into a fluid UI. Features high-performance dynamic filtering and optimized data relationship handling.",
+        "stack": "Go, REST API, HTML/CSS"
+      },
+      "ascii-art-web": {
+        "title": "ASCII Art Web",
+        "description": "Terminal Art on the Web. Instant text-to-ASCII conversion service, bridging low-level string manipulation with modern web architecture.",
+        "stack": "Go, HTML, CSS"
+      },
+      "lem-in": {
+        "title": "Lem-in",
+        "description": "Critical Data Flow Optimization. Engineered an intelligent algorithm capable of efficiently routing thousands of units through complex networks in record time.",
+        "stack": "Go, Graph Theory"
+      },
+      "make-your-game": {
+        "title": "Make Your Game",
+        "description": "High-Performance Game Engine. Retro arcade experience built from scratch in Vanilla JS/Canvas. Component-based architecture ensuring constant 60 FPS without frameworks.",
+        "stack": "JavaScript, Canvas API"
+      },
+      "teamup-hub": {
+        "title": "TeamUp Hub",
+        "description": "Management platform providing instant visibility into member activity and statistics. Event-driven WebSocket architecture for immediate synchronization of critical data.",
+        "stack": "React, Node.js, Prisma, WebSocket"
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "description": "Interested in a collaboration or a chat? Feel free to reach out.",
+    "email": "Send an email",
+    "github": "GitHub",
+    "linkedin": "LinkedIn",
+    "cv": "Download my CV"
+  },
+  "blog": {
+    "title": "Blog",
+    "description": "Thoughts and insights on web development.",
+    "readMore": "Read more",
+    "backToList": "Back to blog",
+    "publishedOn": "Published on"
+  },
+  "notFound": {
+    "title": "404",
+    "subtitle": "Page not found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "backHome": "Back to home"
+  },
+  "footer": {
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js, Tailwind CSS and a lot of coffee."
+  }
+}

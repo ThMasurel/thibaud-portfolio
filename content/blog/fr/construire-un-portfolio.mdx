@@ -1,0 +1,64 @@
+---
+title: "Comment j'ai construit ce portfolio"
+description: "Retour d'expérience sur la création de mon portfolio avec Next.js, Tailwind CSS et Velite."
+date: 2024-12-15
+locale: fr
+slug: construire-un-portfolio
+---
+
+## Pourquoi refaire mon portfolio ?
+
+Mon ancien portfolio était un site HTML/CSS statique hébergé sur GitHub Pages. Fonctionnel, mais limité. Je voulais quelque chose de plus moderne, avec du contenu dynamique et un blog intégré.
+
+## Le choix de la stack
+
+### Next.js App Router
+
+Le choix de Next.js s'est imposé naturellement. L'App Router offre un routage basé sur le système de fichiers, le rendu côté serveur, et une excellente intégration avec Vercel pour le déploiement.
+
+### Tailwind CSS + Glassmorphism
+
+Tailwind permet d'itérer rapidement sur le design. J'ai combiné `backdrop-blur` et des bordures semi-transparentes pour créer un effet glassmorphism cohérent sur l'ensemble du site.
+
+### Velite pour le blog
+
+Après avoir exploré Contentlayer (abandonné), j'ai choisi Velite. Il offre des schemas Zod type-safe et une intégration MDX native. Chaque article est un fichier `.mdx` avec des métadonnées validées automatiquement.
+
+### next-intl pour le bilingue
+
+Le support de `next-intl` pour l'App Router est excellent. Les traductions sont chargées côté serveur et disponibles dans tous les composants via `useTranslations`.
+
+## Architecture
+
+L'architecture suit le pattern classique Next.js App Router :
+- `[locale]/` pour le routage i18n
+- Des composants serveur par défaut, des composants client uniquement quand nécessaire (animations, interactivité)
+- Le blog utilise Velite pour transformer les fichiers MDX en données typées
+
+## Ce que j'ai appris
+
+1. **Le pattern "use client"** : Ne pas tout mettre en client component. Garder les composants serveur quand possible.
+2. **L'animation progressive** : Utiliser `whileInView` de Framer Motion plutôt que des animations au chargement.
+3. **Le dark mode sans flash** : Un script inline dans le `<head>` pour appliquer la classe `dark` avant le premier rendu.
+
+```javascript
+(function() {
+  try {
+    var theme = localStorage.getItem('theme');
+    if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  } catch(e) {}
+})();
+```
+
+### Performance First
+
+Au-delà du design, la performance était non-négociable. Le site atteint un score de **100/100 sur Lighthouse** (Mobile & Desktop). 
+- Images converties automatiquement en **WebP** via `next/image`
+- Police **Geist** auto-hébergée (zéro layout shift)
+- Bundle JS optimisé (moins de 80kb gzippé pour la homepage)
+
+## Conclusion
+
+Ce portfolio est autant un projet d'apprentissage qu'une vitrine. Le code source est disponible sur GitHub — n'hésitez pas à vous en inspirer !

@@ -1,0 +1,64 @@
+---
+title: "How I built this portfolio"
+description: "A look back at building my portfolio with Next.js, Tailwind CSS and Velite."
+date: 2024-12-15
+locale: en
+slug: building-a-portfolio
+---
+
+## Why rebuild my portfolio?
+
+My previous portfolio was a static HTML/CSS site hosted on GitHub Pages. Functional, but limited. I wanted something more modern, with dynamic content and an integrated blog.
+
+## Choosing the stack
+
+### Next.js App Router
+
+Next.js was the natural choice. The App Router provides file-based routing, server-side rendering, and excellent Vercel integration for deployment.
+
+### Tailwind CSS + Glassmorphism
+
+Tailwind allows rapid design iteration. I combined `backdrop-blur` with semi-transparent borders to create a consistent glassmorphism effect across the entire site.
+
+### Velite for the blog
+
+After exploring Contentlayer (now abandoned), I chose Velite. It provides type-safe Zod schemas and native MDX integration. Each article is an `.mdx` file with automatically validated metadata.
+
+### next-intl for bilingual support
+
+The `next-intl` support for App Router is excellent. Translations are loaded server-side and available in all components via `useTranslations`.
+
+## Architecture
+
+The architecture follows the classic Next.js App Router pattern:
+- `[locale]/` for i18n routing
+- Server components by default, client components only when needed (animations, interactivity)
+- The blog uses Velite to transform MDX files into typed data
+
+## What I learned
+
+1. **The "use client" pattern**: Don't make everything a client component. Keep server components when possible.
+2. **Progressive animation**: Use Framer Motion's `whileInView` rather than load-time animations.
+3. **Flash-free dark mode**: An inline script in `<head>` to apply the `dark` class before first render.
+
+```javascript
+(function() {
+  try {
+    var theme = localStorage.getItem('theme');
+    if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  } catch(e) {}
+})();
+```
+
+### Performance First
+
+Beyond design, performance was non-negotiable. The site hits a **100/100 Lighthouse score** (Mobile & Desktop).
+- Images automatically converted to **WebP** via `next/image`
+- Self-hosted **Geist** font (zero layout shift)
+- Optimized JS bundle (under 80kb gzipped for the homepage)
+
+## Conclusion
+
+This portfolio is as much a learning project as a showcase. The source code is available on GitHub — feel free to use it as inspiration!

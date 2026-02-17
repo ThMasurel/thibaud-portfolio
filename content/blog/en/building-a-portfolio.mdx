@@ -1,45 +1,49 @@
 ---
 title: "How I built this portfolio"
 description: "A look back at building my portfolio with Next.js, Tailwind CSS and Velite."
-date: 2024-12-15
+date: 2026-01-20
 locale: en
 slug: building-a-portfolio
 ---
 
-## Why rebuild my portfolio?
+## Time for a change
 
-My previous portfolio was a static HTML/CSS site hosted on GitHub Pages. Functional, but limited. I wanted something more modern, with dynamic content and an integrated blog.
+My old portfolio was a plain HTML/CSS site hosted on GitHub Pages. It did the job, but every time I wanted to add a project or write something, I had to hand-code everything. I was tired of it. I wanted something clean, with a built-in blog, bilingual support, and honestly — something I could be proud of.
 
-## Choosing the stack
+## Why this stack?
 
 ### Next.js App Router
 
-Next.js was the natural choice. The App Router provides file-based routing, server-side rendering, and excellent Vercel integration for deployment.
+I had already worked with React on TeamUp Hub, so Next.js felt like the natural next step. The App Router won me over: file-based routing, built-in server rendering, and deploying to Vercel is literally one push away. Once you try it, there's no going back.
 
-### Tailwind CSS + Glassmorphism
+### Tailwind CSS and glassmorphism
 
-Tailwind allows rapid design iteration. I combined `backdrop-blur` with semi-transparent borders to create a consistent glassmorphism effect across the entire site.
+Tailwind is one of those tools where you start thinking "why would I write classes in my HTML?" and two days later you can't live without it. For the design, I played around with `backdrop-blur` and semi-transparent borders to get that frosted glass look. It's subtle but it completely changes the feel of the site.
 
 ### Velite for the blog
 
-After exploring Contentlayer (now abandoned), I chose Velite. It provides type-safe Zod schemas and native MDX integration. Each article is an `.mdx` file with automatically validated metadata.
+I first looked into Contentlayer, but the project has been abandoned for a while. So I went with Velite instead: Zod schemas to validate article metadata, native MDX support, and a clean integration with Next.js. Every article is an `.mdx` file, and everything is typed end to end — if I mess up the frontmatter, the build tells me right away.
 
 ### next-intl for bilingual support
 
-The `next-intl` support for App Router is excellent. Translations are loaded server-side and available in all components via `useTranslations`.
+French and English support was non-negotiable. I wanted a portfolio that works for a recruiter in Paris just as well as for an international company. `next-intl` fits perfectly with the App Router: translations are loaded server-side and available everywhere through `useTranslations`. No flash, no hassle.
 
 ## Architecture
 
-The architecture follows the classic Next.js App Router pattern:
-- `[locale]/` for i18n routing
-- Server components by default, client components only when needed (animations, interactivity)
-- The blog uses Velite to transform MDX files into typed data
+Nothing groundbreaking, but it's solid:
+- `[locale]/` to handle i18n routing automatically
+- Server components by default, client components only where needed (animations, toggles)
+- The blog goes through Velite, which transforms MDX files into typed data at build time
 
-## What I learned
+## The struggles (and what I took away)
 
-1. **The "use client" pattern**: Don't make everything a client component. Keep server components when possible.
-2. **Progressive animation**: Use Framer Motion's `whileInView` rather than load-time animations.
-3. **Flash-free dark mode**: An inline script in `<head>` to apply the `dark` class before first render.
+### "use client" everywhere
+
+Early on, I made the classic mistake: slapping `"use client"` on almost every component. The result was a bloated JS bundle and poor performance. I learned to keep server components as the default and only wrap the interactive bits in minimal client wrappers.
+
+### The dark mode flash
+
+First load in dark mode: a 200ms white flash. Awful. The fix is an inline script in the `<head>` that applies the `dark` class before React even loads:
 
 ```javascript
 (function() {
@@ -52,13 +56,12 @@ The architecture follows the classic Next.js App Router pattern:
 })();
 ```
 
-### Performance First
+It looks simple, but it took me a while to figure out why the flash kept happening even with a `useEffect`. The thing is, React hydrates after the browser's first paint — hence the need for a blocking script in the head.
 
-Beyond design, performance was non-negotiable. The site hits a **100/100 Lighthouse score** (Mobile & Desktop).
-- Images automatically converted to **WebP** via `next/image`
-- Self-hosted **Geist** font (zero layout shift)
-- Optimized JS bundle (under 80kb gzipped for the homepage)
+### Animating at the right time
 
-## Conclusion
+I stopped animating everything on page load. Motion's `whileInView` is the right approach: elements animate when the user scrolls to them. It feels more natural and avoids animations that nobody sees because they play off-screen.
 
-This portfolio is as much a learning project as a showcase. The source code is available on GitHub — feel free to use it as inspiration!
+## Wrapping up
+
+This portfolio taught me just as much as my coursework projects. It's the kind of side project where you touch on everything: design, architecture, performance, i18n, deployment. The source code is on GitHub if you're curious — feel free to dig around.

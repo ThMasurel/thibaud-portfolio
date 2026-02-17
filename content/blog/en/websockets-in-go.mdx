@@ -1,24 +1,26 @@
 ---
 title: "WebSockets in Go: from concept to production"
-description: "A practical guide to implementing WebSockets in Go, based on my experience with the real-time forum."
-date: 2024-11-20
+description: "A practical guide to implementing WebSockets in Go, based on my experience with TeamUp Hub and the real-time forum."
+date: 2026-01-05
 locale: en
 slug: websockets-in-go
 ---
 
-## Introduction
+## How I got into this
 
-When developing TeamUp Hub, I needed to implement a real-time chat system. WebSockets were the obvious solution, but their implementation in Go has its subtleties.
+While working on TeamUp Hub, my personal project built with React and Node.js, I needed real-time notifications. Rather than polling every 5 seconds like it's 2010, I dove into WebSockets. I spent quite a few evenings wrapping my head around the protocol, testing implementations, and breaking things along the way.
 
-## What is a WebSocket?
+The timing turned out to be perfect: a few weeks later, my school curriculum asked me to build a real-time forum in Go with private chat over WebSocket. I already had the concepts down — I just had to translate them into Go. It's one of those moments where personal curiosity pays off. I was the only one in my group who didn't start from scratch on the topic.
 
-A WebSocket is a bidirectional, persistent communication protocol. Unlike HTTP (request-response), a WebSocket maintains an open connection, allowing the server to send data to the client without waiting for a request.
+## WebSocket in a nutshell
 
-## Implementation in Go
+A WebSocket is a persistent, bidirectional connection between client and server. Unlike HTTP where the client makes a request and the server responds, here the connection stays open. The server can push data to the client whenever it wants, without the client asking for anything. For chat, live notifications, or data synchronization, it's exactly the right tool.
 
-### The gorilla/websocket package
+## Implementing it in Go
 
-The `gorilla/websocket` package is the de facto standard for WebSockets in Go:
+### gorilla/websocket
+
+In Go, the `gorilla/websocket` package is the go-to choice. It handles the upgrade from an HTTP connection to a WebSocket:
 
 ```go
 var upgrader = websocket.Upgrader{
@@ -32,7 +34,7 @@ var upgrader = websocket.Upgrader{
 
 ### The Hub pattern
 
-The Hub pattern centralizes connection management:
+The real challenge is managing dozens (or hundreds) of simultaneous connections. The answer: the Hub pattern. A central point that keeps track of connected clients and routes messages between them.
 
 ```go
 type Hub struct {
@@ -43,21 +45,11 @@ type Hub struct {
 }
 ```
 
-Here is how everything seamlessly connects:
+The idea is straightforward: every new connection registers with the Hub, every disconnection unregisters, and messages flow through a central channel.
 
-```mermaid
-graph TD
-Client1[Client 1] <-->|WS| Hub
-Client2[Client 2] <-->|WS| Hub
-Client3[Client 3] <-->|WS| Hub
-Hub -->|Broadcast| Client1
-Hub -->|Broadcast| Client2
-Hub -->|Broadcast| Client3
-```
+### The main loop
 
-### The Hub Loop
-
-The core of the system lies in the `Run()` method, which uses a `select` statement to handle concurrency in a non-blocking way:
+The heart of the whole thing is the `Run()` method. It runs in its own goroutine and uses a `select` to process events as they come:
 
 ```go
 func (h *Hub) Run() {
@@ -75,7 +67,6 @@ func (h *Hub) Run() {
                 select {
                 case client.send <- message:
                 default:
-                    // If client blocks, drop it to avoid freezing the Hub
                     close(client.send)
                     delete(h.clients, client)
                 }
@@ -85,28 +76,28 @@ func (h *Hub) Run() {
 }
 ```
 
-Each client has two goroutines: one for reading, one for writing. The Hub orchestrates messages between all connected clients.
+That `default` in the inner select is crucial: if a client isn't consuming its messages (slow connection, browser crash), we disconnect it rather than blocking the entire Hub. Without it, a single stalled client can freeze the whole server.
 
-## Error handling
+Each client runs two goroutines: one reading incoming messages (`readPump`), one writing outgoing messages (`writePump`). The Hub orchestrates everything.
 
-WebSockets can disconnect at any time. You need to handle:
-- **Timeouts** with regular pings/pongs
-- **Abrupt disconnections** by cleaning up resources
-- **Malformed messages** with strict validation
+## The traps I fell into
 
-## Lessons learned
+### Zombie goroutines
 
-1. **Always use goroutines** for reading and writing — never block the main goroutine.
-2. **Implement ping/pong** to detect dead connections.
-3. **Limit message size** to prevent memory saturation attacks.
-4. **Test with multiple connections** — concurrency bugs often only appear under load.
+The nastiest bug I had: the server's memory climbing non-stop. After a few hours of testing, the Go process was eating up hundreds of megabytes. The cause? Goroutines stuck waiting to send to a client that was already gone. The channel wasn't being closed properly in certain edge cases during disconnection.
 
-### The Orphaned Goroutines Trap
+The takeaway: always have a clear exit path for every goroutine. A `defer` that closes the channel, a timeout, a context — whatever works, but the goroutine needs to be able to die.
 
-Early in the project, I encountered a nasty bug: the server's memory usage would climb indefinitely. The cause? Disconnections weren't always properly closing the `send` channel in edge cases. As a result, thousands of "zombie goroutines" were left blocked, waiting to write to a phantom client.
+### Ping/pong
 
-The lesson: always use a `select` with a `default` case or a timeout when sending to non-buffered channels, and ensure every goroutine has a clear exit condition (like a channel closure).
+A WebSocket can be "open" server-side while the client closed the tab 10 minutes ago. The only way to know is to send regular pings and wait for the pong. If the pong doesn't come back in time, the client is considered dead and we clean up.
 
-## Conclusion
+### Testing concurrency
 
-WebSockets in Go are powerful but require a good understanding of concurrency. The Hub pattern remains the best approach for managing multiple simultaneous connections.
+Concurrency bugs are sneaky. Everything works fine with 2 connected users. With 20, the server panics on a `concurrent map write`. That taught me to always test under realistic conditions — multiple tabs, rapid connect/disconnect cycles, messages sent in bursts.
+
+## What I take away from this
+
+WebSockets in Go are powerful. Goroutines and channels were made for this — handling concurrency without getting bogged down in threads and mutexes. But it demands discipline: every goroutine must have an end, every channel must be closed, and every error case must be anticipated.
+
+Having explored all of this out of curiosity on TeamUp Hub before encountering it in my coursework gave me a real edge. That's the thing about learning to code: side projects feed into your formal training, and formal training gives structure to your side projects.

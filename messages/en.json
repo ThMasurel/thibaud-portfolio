@@ -16,8 +16,8 @@
   },
   "about": {
     "title": "About",
-    "description": "A passionate software development student, I specialize in building complete web applications — from Go back-ends to modern React interfaces. Every project is an opportunity to sharpen my skills and tackle new technical challenges.",
-    "description2": "My journey has led me to work on diverse problems: graph algorithms, REST APIs, real-time systems with WebSockets, and front-end development with frameworks like Next.js. I place great emphasis on code quality, performance, and user experience.",
+    "description": "Full-stack web developer, I specialize in building modern and performant applications — from Go back-ends to React, Next.js and Angular interfaces. I recently completed an internship at CRAF2S where I contributed to 4 production projects: the official website, a mobile app, a WordPress plugin, and a showcase website.",
+    "description2": "My journey has led me to work on diverse problems: graph algorithms, REST APIs, real-time systems with WebSockets, headless CMS (Sanity), payment integration (Stripe), hybrid mobile apps (Ionic + Capacitor), and custom WordPress development. I place great emphasis on code quality, performance, and user experience.",
     "description3": "Curious and self-taught, I'm also interested in the DevOps ecosystem (Docker, CI/CD), software architecture, and development best practices. My goal: building elegant solutions that solve real problems.",
     "stats": {
       "projects": "Projects completed",

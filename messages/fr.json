@@ -16,8 +16,8 @@
   },
   "about": {
     "title": "À propos",
-    "description": "Étudiant passionné en développement logiciel, je me spécialise dans la création d'applications web complètes — du back-end en Go aux interfaces React modernes. Chaque projet est pour moi l'occasion d'approfondir mes compétences et de relever de nouveaux défis techniques.",
-    "description2": "Mon parcours m'a amené à travailler sur des problématiques variées : algorithmes de graphes, APIs REST, systèmes temps réel avec WebSockets, et développement front-end avec des frameworks comme Next.js. J'attache une importance particulière à la qualité du code, aux performances et à l'expérience utilisateur.",
+    "description": "Développeur web full-stack, je me spécialise dans la création d'applications modernes et performantes — du back-end en Go aux interfaces React, Next.js et Angular. J'ai récemment effectué un stage chez CRAF2S où j'ai contribué à 4 projets en production : site officiel, application mobile, plugin WordPress et site vitrine.",
+    "description2": "Mon parcours m'a amené à travailler sur des problématiques variées : algorithmes de graphes, APIs REST, systèmes temps réel avec WebSockets, CMS headless (Sanity), intégration de paiements (Stripe), applications mobiles hybrides (Ionic + Capacitor) et développement WordPress sur mesure. J'attache une importance particulière à la qualité du code, aux performances et à l'expérience utilisateur.",
     "description3": "Curieux et autodidacte, je m'intéresse aussi à l'écosystème DevOps (Docker, CI/CD), à l'architecture logicielle et aux bonnes pratiques de développement. Mon objectif : concevoir des solutions élégantes qui résolvent de vrais problèmes.",
     "stats": {
       "projects": "Projets réalisés",

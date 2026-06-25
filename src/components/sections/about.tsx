@@ -6,8 +6,8 @@ import { FadeIn } from "@/components/motion/fade-in";
 import { Stagger, StaggerItem } from "@/components/motion/stagger";
 
 const stats = [
-  { value: "5+", key: "projects" },
-  { value: "10+", key: "technologies" },
+  { value: "9+", key: "projects" },
+  { value: "15+", key: "technologies" },
   { value: "3+", key: "experience" },
 ] as const;
 

@@ -38,13 +38,35 @@
     "title": "Projets",
     "filters": {
       "all": "Tous",
+      "stage": "Stage",
       "go": "Go",
       "js": "JavaScript",
       "fullstack": "Full-Stack"
     },
     "viewCode": "Code source",
     "viewLive": "Voir le site",
+    "viewPreview": "Voir le style",
     "items": {
+      "craf2s-website": {
+        "title": "CRAF2S — Site officiel",
+        "description": "Site officiel de l'entreprise repris et optimisé en stage. CMS Sanity avec live preview, formulaires de candidature dynamiques, intégration Stripe et API OneDrive pour la gestion des pièces jointes.",
+        "stack": "Next.js 14, Sanity CMS, Stripe, TypeScript"
+      },
+      "2sclub": {
+        "title": "2S Club — Site vitrine",
+        "description": "Site vitrine premium pour une salle de sport, créé de zéro en stage. Système de design complet, SEO structuré (schema.org + OpenGraph), animations Framer Motion et tracking analytics Vercel.",
+        "stack": "Next.js 16, Sanity 5, Tailwind CSS 4, Framer Motion"
+      },
+      "link-up": {
+        "title": "Link-Up — App mobile",
+        "description": "Application mobile de gestion de l'apprentissage développée en stage. Système de visibilité documentaire, architecture monorepo admin/client, fonctions cloud Firebase et déploiement sur mobile via Capacitor.",
+        "stack": "Angular 14, Ionic 6, Firebase, TypeScript"
+      },
+      "craf2s-wp": {
+        "title": "CRAF2S — Plugin Gutenberg",
+        "description": "Plugin WordPress sur mesure développé en stage. 11 blocs Gutenberg construits avec React et SCSS, panel d'administration configurable, animations scroll et déploiement OVH.",
+        "stack": "WordPress, React, Gutenberg, SCSS, Webpack"
+      },
       "groupie-tracker": {
         "title": "Groupie Tracker",
         "description": "Visualisateur de données musicales interactif. Transformation de données brutes complexe en interface fluide. Algorithmes de filtrage dynamique et gestion optimisée de relations de données.",

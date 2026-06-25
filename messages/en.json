@@ -38,13 +38,35 @@
     "title": "Projects",
     "filters": {
       "all": "All",
+      "stage": "Internship",
       "go": "Go",
       "js": "JavaScript",
       "fullstack": "Full-Stack"
     },
     "viewCode": "Source Code",
     "viewLive": "Live Demo",
+    "viewPreview": "See the design",
     "items": {
+      "craf2s-website": {
+        "title": "CRAF2S — Official Website",
+        "description": "Company website taken over and optimized during internship. Sanity CMS with live preview, dynamic application forms, Stripe integration, and OneDrive API for attachment management.",
+        "stack": "Next.js 14, Sanity CMS, Stripe, TypeScript"
+      },
+      "2sclub": {
+        "title": "2S Club — Showcase Website",
+        "description": "Premium showcase website for a gym, built from scratch during internship. Complete design system, structured SEO (schema.org + OpenGraph), Framer Motion animations, and Vercel analytics tracking.",
+        "stack": "Next.js 16, Sanity 5, Tailwind CSS 4, Framer Motion"
+      },
+      "link-up": {
+        "title": "Link-Up — Mobile App",
+        "description": "Mobile apprenticeship management app developed during internship. Document visibility system, admin/client monorepo architecture, Firebase Cloud Functions, and native mobile deployment via Capacitor.",
+        "stack": "Angular 14, Ionic 6, Firebase, TypeScript"
+      },
+      "craf2s-wp": {
+        "title": "CRAF2S — Gutenberg Plugin",
+        "description": "Custom WordPress plugin developed during internship. 11 Gutenberg blocks built with React and SCSS, configurable admin panel, scroll animations, and OVH deployment.",
+        "stack": "WordPress, React, Gutenberg, SCSS, Webpack"
+      },
       "groupie-tracker": {
         "title": "Groupie Tracker",
         "description": "Interactive Music Data Visualizer. Transformation of complex raw data into a fluid UI. Features high-performance dynamic filtering and optimized data relationship handling.",
